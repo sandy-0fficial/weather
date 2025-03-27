@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather Monitoring - India</title>
+    <link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}" type="image/x-icon">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-image: url('/static/weatherbg.jpg');  /* Update with your image path */
+            background-size: cover;
+            background-position: center;
+            color: var(--text-color);
+            transition: color 0.3s ease;
+        }
+
+        body.light {
+            --text-color: #000000;
+        }
+
+        body.dark {
+            --text-color: #ffffff;
+        }
+
+        .translucent-card {
+            background-color: rgba(255, 255, 255, 0.85);
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .marquee {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            box-sizing: border-box;
+        }
+
+        .marquee span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll-text 40s linear infinite;
+            font-weight: bold;
+            font-size: 1.2rem;
+        }
+
+        @keyframes scroll-text {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Marquee for Important Updates -->
+    <div class="marquee">
+        <span> Zeotap Open Weather project - Sandeep Krishna  </span>
+    </div>
+
+    <div class="container mt-5">
+        <h1>Weather Monitoring for Indian Cities</h1>
+
+        <!-- Download Report Button at the Top -->
+        <div class="text-center mt-4 mb-4">
+            <a href="{{ url_for('download_report', units=units) }}" class="btn btn-primary">Download Weather Report</a>
+        </div>
+
+        <!-- User Preferences for Temperature Units -->
+        <div class="text-center mb-4">
+            <label for="tempUnit">Choose temperature unit:</label>
+            <form method="POST">
+                <select name="units" id="tempUnit" onchange="this.form.submit()">
+                    <option value="metric" {% if units == 'metric' %}selected{% endif %}>Celsius</option>
+                    <option value="imperial" {% if units == 'imperial' %}selected{% endif %}>Fahrenheit</option>
+                    <option value="standard" {% if units == 'standard' %}selected{% endif %}>Kelvin</option>
+                </select>
+            </form>
+        </div>
+
+        <!-- Weather Cards for Each City -->
+        <div class="row" id="weatherCards">
+            {% for data in weather_data %}
+            <div class="col-md-4">
+                <div class="card translucent-card mt-4">
+                    <div class="card-body text-center">
+                        <h4>{{ data.city }}</h4>
+                        <p>Temperature: {{ data.temperature }}</p>
+                        <p>Feels Like: {{ data.feels_like }}</p>
+                        <p>Average Temp: {{ data.avg_temp }}</p>
+                        <p>Max Temp: {{ data.temp_max }}</p>
+                        <p>Min Temp: {{ data.temp_min }}</p>
+                        <p>Humidity: {{ data.humidity }}%</p>
+                        <p>Wind Speed: {{ data.wind_speed }} m/s</p>
+                        <p>Condition: {{ data.main }} - {{ data.description }}</p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
