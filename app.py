@@ -61,4 +61,4 @@ def download_report():
     return send_file(report_file, as_attachment=True, download_name='weather_report.csv')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run()
