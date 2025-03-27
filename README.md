@@ -2,7 +2,7 @@
 This simple application uses very basic structure in order to run this app.
 	1) Python for backend
 	2) html and css for frontend
-	3)Openweather API to retrieve information of weather.
+	3) Openweather API to retrieve information of weather.
 l
 This app is developed in *linux OS* with VScode.
 
@@ -30,7 +30,3 @@ Browser :
 	localhost:5000
 	
 	Now you should be able to see the beautiful webpage of weather information.
-
-
-
-### Thank you Zeotap its been a wonderful experience working on this projects. ###
